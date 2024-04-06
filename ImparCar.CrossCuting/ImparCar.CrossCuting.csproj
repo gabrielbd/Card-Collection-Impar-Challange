@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ImparCar.Application\ImparCar.Application.csproj" />
+    <ProjectReference Include="..\ImparCar.Domain\ImparCar.Domain.csproj" />
+    <ProjectReference Include="..\ImparCar.Infra\ImparCar.Infra.csproj" />
+  </ItemGroup>
+
 </Project>

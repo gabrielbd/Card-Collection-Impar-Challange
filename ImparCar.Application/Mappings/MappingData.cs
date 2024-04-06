@@ -9,17 +9,18 @@ namespace ImparCar.Application.Mappings
     {
         public MappingData()
         {
-            CreateMap<Car, CreateCarRequest>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Base64, opt => opt.MapFrom(src => src.Photo.Base64));
-            CreateMap<CreateCarResponse, Car>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdCar))
-                .ForMember(dest => dest.PhotoId, opt => opt.MapFrom(src => src.IdPhoto));
+            CreateMap<CreateCarRequest, Car>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => new Photo { Base64 = System.Convert.FromBase64String(src.Base64)}));
 
-            CreateMap<Photo, CreateCarRequest>()
-                .ForMember(dest => dest.Base64, opt => opt.MapFrom(src => src.Base64));
+            CreateMap<Car, CreateCarResponse>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.IdCar, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.IdPhoto, opt => opt.MapFrom(src => src.PhotoId));
+
             CreateMap<CreateCarRequest, Photo>()
+                 .ForMember(dest => dest.Base64, opt => opt.MapFrom(src => src.Base64));
+            CreateMap<Photo, CreateCarRequest>()
                 .ForMember(dest => dest.Base64, opt => opt.MapFrom(src => src.Base64));
 
             CreateMap<Car, GetByIdCarRequest>()
@@ -53,8 +54,8 @@ namespace ImparCar.Application.Mappings
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdCar))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Photo.Id, opt => opt.MapFrom(src => src.IdPhoto))
-                .ForMember(dest => dest.Photo.Base64, opt => opt.MapFrom(src => src.Base64));
+                .ForPath(dest => dest.Photo.Id, opt => opt.MapFrom(src => src.IdPhoto))
+                .ForPath(dest => dest.Photo.Base64, opt => opt.MapFrom(src => src.Base64));
         }
     }
 }
