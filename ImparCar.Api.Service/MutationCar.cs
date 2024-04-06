@@ -1,7 +1,6 @@
 ﻿using ImparCar.Application.Interfaces.Handlers;
 using ImparCar.Application.Requests.Car;
 using ImparCar.Application.Response.Car;
-using HotChocolate;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -17,9 +16,10 @@ namespace ImparCar.Api.Service
         {
             return await handler.UpdateAsync(request);
         }
-        public async Task EditarCardCarro([Service] ICarHandler handler,  Guid id)
+        public async Task<bool> DeletedCar ([Service] ICarHandler handler,  Guid id)
         {
             await handler.DeleteAsync(id);
+            return true;
         }
     }
 }

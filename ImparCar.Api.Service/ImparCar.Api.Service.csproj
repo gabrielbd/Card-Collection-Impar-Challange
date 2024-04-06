@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImparCar.Application\ImparCar.Application.csproj" />
+    <ProjectReference Include="..\ImparCar.CrossCuting\ImparCar.CrossCuting.csproj" />
   </ItemGroup>
 
 </Project>
