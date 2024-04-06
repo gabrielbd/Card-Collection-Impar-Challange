@@ -9,6 +9,5 @@ namespace ImparCar.Application.Response.Car
         public string? Name { get; set; }
         public List<ValidationFailure>? Errors { get; set; }
 
-
     }
 }

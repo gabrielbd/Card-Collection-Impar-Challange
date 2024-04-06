@@ -32,8 +32,7 @@ namespace ImparCar.Application.Mappings
             CreateMap<UpdateCarRequest, Car>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.PhotoId, opt => opt.MapFrom(src => src.IdPhoto));
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
             CreateMap<Car, UpdateCarResponse>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
