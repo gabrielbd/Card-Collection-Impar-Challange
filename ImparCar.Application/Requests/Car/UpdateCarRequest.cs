@@ -14,12 +14,5 @@ namespace ImparCar.Application.Requests.Car
 
         public string? IdPhoto { get; set; }
         public string? Base64 { get; set; }
-
-
-
-
-
-
-
     }
 }
