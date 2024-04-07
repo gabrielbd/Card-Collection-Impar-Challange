@@ -8,7 +8,7 @@ namespace ImparCar.Application.Response.Car
         public Guid IdCar { get; set; }
         public string? Status { get; set; }
         public Guid IdPhoto { get; set; }
-        public byte[]? Base64 { get; set; }
+        public string? Base64 { get; set; }
         public List<ValidationFailure>? Errors { get; set; }
 
 

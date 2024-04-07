@@ -29,6 +29,10 @@ namespace ImparCar.Infra.Mappings
                .HasColumnName("Status")
                .HasDefaultValue("1");
 
+            builder.HasOne(pr => pr.Photo)
+                .WithOne(g => g.Car)
+                .HasForeignKey<Car>(a => a.PhotoId)
+                .IsRequired();
         }
     }
 }

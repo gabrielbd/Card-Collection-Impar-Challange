@@ -9,5 +9,9 @@ namespace ImparCar.Domain.Interfaces.Services
 {
     public interface ICarDomainService : IBaseDomainService<Car>
     {
+        Task<List<Car>> GetAllCarsWithPhotosAsync();
+        Task<Car> GetByIdWithPhotoAsync(Guid id);
+
+
     }
 }

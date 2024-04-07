@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ImparCar.Infra.Migrations
 {
     [DbContext(typeof(SqlContexts))]
-    [Migration("20240406181503_firstMigration")]
-    partial class firstMigration
+    [Migration("20240407015637_fristMigrationAtt")]
+    partial class fristMigrationAtt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

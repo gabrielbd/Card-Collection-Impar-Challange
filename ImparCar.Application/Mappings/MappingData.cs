@@ -2,6 +2,7 @@
 using ImparCar.Application.Requests.Car;
 using ImparCar.Application.Response.Car;
 using ImparCar.Domain.Entities;
+using System.Collections;
 
 namespace ImparCar.Application.Mappings
 {
@@ -39,21 +40,20 @@ namespace ImparCar.Application.Mappings
                 .ForMember(dest => dest.IdCar, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.IdPhoto, opt => opt.MapFrom(src => src.PhotoId))
-                .ForMember(dest => dest.Base64, opt => opt.MapFrom(src => src.Photo.Base64));
-
+                .ForMember(dest => dest.Base64, opt => opt.MapFrom(src => Convert.ToBase64String(src.Photo.Base64)));
 
             CreateMap<Car, CarResponse>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.IdCar, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.IdPhoto, opt => opt.MapFrom(src => src.Photo.Id))
-                .ForMember(dest => dest.Base64, opt => opt.MapFrom(src => src.Photo.Base64));
+                .ForMember(dest => dest.IdPhoto, opt => opt.MapFrom(src => src.PhotoId))
+                .ForMember(dest => dest.Base64, opt => opt.MapFrom(src => Convert.ToBase64String(src.Photo.Base64)));
 
             CreateMap<CarResponse, Car>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdCar))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-                .ForPath(dest => dest.Photo.Id, opt => opt.MapFrom(src => src.IdPhoto))
+                .ForPath(dest => dest.PhotoId, opt => opt.MapFrom(src => src.IdPhoto))
                 .ForPath(dest => dest.Photo.Base64, opt => opt.MapFrom(src => src.Base64));
         }
     }

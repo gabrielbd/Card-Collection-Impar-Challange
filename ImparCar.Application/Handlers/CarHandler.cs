@@ -35,7 +35,6 @@ namespace ImparCar.Application.Handlers
                     Errors = validatorResult.Errors
                 };
             }
-
             var mapPhoto = new Photo
             {
                 Base64 = System.Convert.FromBase64String(request.Base64)
@@ -45,6 +44,7 @@ namespace ImparCar.Application.Handlers
 
             var mapCar = _mapper.Map<Car>(request);
             mapCar.PhotoId = resultPhoto.Id;
+            mapCar.Photo = resultPhoto;
             var resultCar = await _domain.CreateAsync(mapCar);
 
             var mapResult = _mapper.Map<CreateCarResponse>(resultCar);
@@ -55,6 +55,8 @@ namespace ImparCar.Application.Handlers
         public async Task<UpdateCarResponse> UpdateAsync(UpdateCarRequest request)
         {
             var car = await _domain.GetByIdAsync(request.Id);
+            var updateFoto = await _domainPhoto.GetByIdAsync(car.PhotoId);
+
             if (car == null)
             {
                 throw new Exception("Card não encontrado.");
@@ -66,25 +68,11 @@ namespace ImparCar.Application.Handlers
                 car.Status = request.Status;
             if (request.Base64 != null)
             {
-                var updateFoto = await _domainPhoto.GetByIdAsync(car.PhotoId);
-                if(updateFoto != null)
-                {
-                    updateFoto.Base64 = System.Convert.FromBase64String(request.Base64);
-                    await _domainPhoto.UpdateAsync(updateFoto);
-                }
-                else
-                {
-                    var foto = new Photo { 
-                        Base64 = System.Convert.FromBase64String(request.Base64)
-                    };
-                    var fotoResult = await _domainPhoto.CreateAsync(foto);
-                    car.PhotoId = fotoResult.Id;
-                    car.Photo = fotoResult;
-                }
+                updateFoto.Base64 = System.Convert.FromBase64String(request.Base64);
+                await _domainPhoto.UpdateAsync(updateFoto);
             };
-   
+            
             var carResult = await _domain.UpdateAsync(car);
-
             var mapCarResult = _mapper.Map<UpdateCarResponse>(carResult);
             return mapCarResult;
         }
@@ -96,24 +84,20 @@ namespace ImparCar.Application.Handlers
             {
                 throw new Exception("Card não encontrado.");
             }
-
-            if(car.PhotoId != null)
-            {
-                await _domainPhoto.DeleteAsync(car.PhotoId);
-            }
             await _domain.DeleteAsync(id);
+            await _domainPhoto.DeleteAsync(car.PhotoId);
         }
 
         public async Task<List<CarResponse>> GetAllListAsync()
         {
-            var all = await _domain.GetAllAsync();
+            var all = await _domain.GetAllCarsWithPhotosAsync();
             var mapAll = _mapper.Map<List<CarResponse>>(all);
             return mapAll;
         }
 
         public async Task<CarResponse> GetByIdAsync(Guid id)
         {
-            var car = await _domain.GetByIdAsync(id);
+            var car = await _domain.GetByIdWithPhotoAsync(id);
             if (car == null)
             {
                 throw new Exception("Card não encontrado.");
