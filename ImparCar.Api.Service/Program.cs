@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 DependencyInjector.Register(builder.Services);
 SetupIOC.AddEntityFrameworkServices(builder);
@@ -22,15 +21,8 @@ builder.Services.AddGraphQLServer()
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.UseRouting();
-
-app.UseAuthorization(); 
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
