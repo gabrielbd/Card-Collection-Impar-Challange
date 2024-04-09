@@ -11,6 +11,17 @@ DependencyInjector.Register(builder.Services);
 SetupIOC.AddEntityFrameworkServices(builder);
 SetupIOC.AddAutoMapperServicess(builder);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAny",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 builder.Services.AddGraphQLServer()
     .AddQueryType<QueryCar>()
     .AddMutationType<MutationCar>()
@@ -22,6 +33,7 @@ builder.Services.AddGraphQLServer()
 var app = builder.Build();
 
 app.UseRouting();
+app.UseCors("AllowAny");
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>

@@ -88,7 +88,7 @@ namespace ImparCar.Application.Handlers
             await _domainPhoto.DeleteAsync(car.PhotoId);
         }
 
-        public async Task<List<CarResponse>> GetAllListAsync()
+        public async Task<List<CarResponse>> GetAllListAsync()   
         {
             var all = await _domain.GetAllCarsWithPhotosAsync();
             var mapAll = _mapper.Map<List<CarResponse>>(all);
