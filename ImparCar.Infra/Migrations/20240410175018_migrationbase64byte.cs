@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ImparCar.Infra.Migrations
 {
-    public partial class fristMigrationAtt : Migration
+    public partial class migrationbase64byte : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
